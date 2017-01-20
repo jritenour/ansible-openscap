@@ -10,16 +10,12 @@
         - openscap-scanner
         - scap-security-guide
         - httpd
-      service: 
+  
+    - service: 
         name: httpd
         state: started
     - name: openscap Scan
       shell: 'oscap xccdf eval --profile xccdf_org.ssgproject.content_profile_rht-ccp --results /root/scan-xccdf-results.xml --report /var/www/html/index.html /usr/share/xml/scap/ssg/content/ssg-rhel7-ds.xml'
-      file: 
-        path: /var/www/html/index.html
-        owner: apache
-        group: apache
-        mode: 0644
       ignore_errors: yes
       register: command_result
       failed_when: "'FAILED' in command_result.stderr"
@@ -29,3 +25,10 @@
       ignore_errors: yes
       register: command_result
       failed_when: "'FAILED' in command_result.stderr"
+     
+    - name: Prepare report
+      file: 
+        path: /var/www/html/index.html
+        mode: 0644
+        owner: apache
+        group: apache
