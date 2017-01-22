@@ -14,9 +14,6 @@
     - service: 
         name: httpd
         state: started
-    - file: 
-        path: /var/www/html/index.html
-        state: absent
     - name: openscap Scan
       shell: "oscap xccdf eval --profile '{{ profile }}'--results /root/scan-xccdf-results.xml --report /var/www/html/index.html /usr/share/xml/scap/ssg/content/ssg-rhel7-ds.xml"
       ignore_errors: yes
