@@ -14,6 +14,10 @@
     - service: 
         name: httpd
         state: started
+    - name: remove previous results
+      file: 
+        path: /root/scan-xccdf-results.xml
+        state: absent
     - name: openscap Scan
       shell: "oscap xccdf eval --profile '{{ profile }}'--results /root/scan-xccdf-results.xml /usr/share/xml/scap/ssg/content/ssg-rhel7-ds.xml"
       ignore_errors: yes
