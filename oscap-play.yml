@@ -9,11 +9,6 @@
       with_items:
         - openscap-scanner
         - scap-security-guide
-        - httpd
-    
-    - service: 
-        name: httpd
-        state: started
 
     - name: remediate openscap
       shell: "oscap xccdf eval --remediate --profile '{{ profile }}' --results /root/scan-xccdf-results.xml /usr/share/xml/scap/ssg/content/ssg-rhel7-ds.xml"
@@ -22,4 +17,4 @@
       failed_when: "'FAILED' in command_result.stderr"
 
     - name: Prepare report
-      shell: "oscap xccdf generate report /root/scan-xccdf-results.xml > /var/www/html/index.html"
+      shell: "oscap xccdf generate report /root/scan-xccdf-results.xml > /root/index.html"
